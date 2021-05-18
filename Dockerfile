@@ -12,12 +12,11 @@ ENV farmer_address="null"
 ENV farmer_port="null"
 ENV testnet="false"
 ENV full_node_port="null"
-ARG BRANCH=${BRANCH}
 
 RUN DEBIAN_FRONTEND=noninteractive apt-get update && apt-get install -y curl jq python3 ansible tar bash ca-certificates git openssl unzip wget python3-pip sudo acl build-essential python3-dev python3.8-venv python3.8-distutils apt nfs-common python-is-python3 vim
 
 RUN echo "cloning ${BRANCH}"
-RUN git clone --branch ${BRANCH} https://github.com/Chia-Network/chia-blockchain.git \
+RUN git clone https://github.com/Chia-Network/chia-blockchain.git -b latest \
 && cd chia-blockchain \
 && git submodule update --init mozilla-ca \
 && chmod +x install.sh \
