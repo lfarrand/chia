@@ -11,12 +11,13 @@ echo "farmer_address: ${farmer_address}"
 echo "farmer_port: ${farmer_port}"
 echo "testnet: ${testnet}"
 
+echo "Running chia init"
+chia init
+
 if [[ ! -z ${key_path} ]]; then
   echo "Importing keys from ${key_path}"
   chia init -c ${key_path}
 else
-  chia init
-
   if [[ ${keys} == "generate" ]]; then
     echo "Generating keys"
     echo "To use your own keys pass them as a text file -v /path/to/keyfile:/path/in/container and -e keys=\"/path/in/container\""
