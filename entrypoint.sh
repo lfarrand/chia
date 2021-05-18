@@ -2,6 +2,15 @@ cd /chia-blockchain
 
 . ./activate
 
+echo "key_path: ${key_path}"
+echo "keys: ${keys}"
+echo "plots_dir: ${plots_dir}"
+echo "farmer: ${farmer}"
+echo "harvester: ${harvester}"
+echo "farmer_address: ${farmer_address}"
+echo "farmer_port: ${farmer_port}"
+echo "testnet: ${testnet}"
+
 if [[ ! -z ${key_path} ]]; then
   echo "Importing keys from ${key_path}"
   chia init -c ${key_path}
