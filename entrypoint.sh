@@ -1,3 +1,6 @@
+cd /chiabot
+./harvester.sh > chiabot-harvester.log 2>&1 &
+
 cd /chia-blockchain
 
 . ./activate
