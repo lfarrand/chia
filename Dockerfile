@@ -26,7 +26,10 @@ RUN echo "Installing chiabot"
 RUN mkdir -p chiabot \
 && cd chiabot/ \
 && wget https://github.com/joaquimguimaraes/chiabot/releases/download/v1.3.0-3/chiabot-linux-amd64.tar.gz \
-&& tar -xf chiabot-linux-amd64.tar.gz
+&& tar -xf chiabot-linux-amd64.tar.gz \
+&& rm -rf config.json
+
+RUN ls -al /chiabot
 
 WORKDIR /chia-blockchain
 RUN mkdir /plots
