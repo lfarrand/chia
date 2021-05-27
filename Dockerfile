@@ -28,6 +28,7 @@ RUN mkdir -p chiabot \
 && wget https://github.com/joaquimguimaraes/chiabot/releases/download/v1.3.0-3/chiabot-linux-amd64.tar.gz \
 && tar -xf chiabot-linux-amd64.tar.gz \
 && rm -rf config.json
+&& rm -rf chiabot-linux-amd64.tar.gz
 
 RUN ls -al /chiabot
 
