@@ -7,7 +7,7 @@ cd /chia-blockchain
 
 echo "key_path: ${key_path}"
 echo "keys: ${keys}"
-echo "plots_dir: ${plots_dir}"
+echo "plot_dirs: ${plot_dirs}"
 echo "farmer: ${farmer}"
 echo "harvester: ${harvester}"
 echo "farmer_address: ${farmer_address}"
@@ -35,8 +35,12 @@ if [[ ! "$(ls -A /plots)" ]]; then
   echo "Plots directory appears to be empty and you have not specified another, try mounting a plot directory with the docker -v command "
 fi
 
-echo "Adding plot directory ${plots_dir}"
-chia plots add -d ${plots_dir}
+echo "Adding plot directories ${plot_dirs}"
+IFS=';' read -ra ADDR <<< "${plot_dirs}"
+for plot_dir in "${ADDR[@]}"; do
+  echo "Adding plot directory $plot_dir"
+  chia plots add -d $plot_dir
+done
 
 sed -i 's/localhost/127.0.0.1/g' ~/.chia/mainnet/config/config.yaml
 sed -i 's/log_level: WARNING/log_level: INFO/g' ~/.chia/mainnet/config/config.yaml
