@@ -1,4 +1,8 @@
 cd /chiabot
+rm -rf chiabot-harvester.log
+touch chiabot-harvester.log
+rm -rf log.txt
+touch log.txt
 ./harvester.sh > chiabot-harvester.log 2>&1 &
 
 cd /chia-blockchain
