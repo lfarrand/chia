@@ -22,15 +22,13 @@ RUN git clone https://github.com/Chia-Network/chia-blockchain.git -b latest \
 && chmod +x install.sh \
 && /usr/bin/sh ./install.sh
 
-RUN echo "Installing chiabot"
-RUN mkdir -p chiabot \
-&& cd chiabot/ \
-&& wget https://github.com/joaquimguimaraes/farmr/releases/download/v1.4.0.4/farmr-1.4.0.4-linux-x86_64.tar.gz \
-&& tar -xf chiabot-linux-amd64.tar.gz \
-&& rm -rf config.json \
-&& rm -rf chiabot-linux-amd64.tar.gz
+RUN echo "Installing farmr"
+RUN mkdir -p farmr
+WORKDIR /farmr
+ADD ./downloadfarmr.sh downloadfarmr.sh
+RUN ./downloadfarmr.sh
 
-RUN ls -al /chiabot
+RUN ls -al /farmr
 
 WORKDIR /chia-blockchain
 RUN mkdir /plots
