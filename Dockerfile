@@ -25,7 +25,7 @@ RUN git clone https://github.com/Chia-Network/chia-blockchain.git -b latest \
 RUN echo "Installing farmr"
 RUN mkdir -p farmr
 WORKDIR /farmr
-ADD ./downloadfarmr.sh
+ADD ./downloadfarmr.sh downloadfarmr.sh
 RUN chmod +x downloadfarmr.sh \
 && ./downloadfarmr.sh
 
