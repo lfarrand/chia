@@ -1,7 +1,7 @@
-cd /chiabot
-truncate -s 0 chiabot-harvester.log
+cd /farmr
+truncate -s 0 farmr-harvester.log
 truncate -s 0 log.txt
-./harvester.sh > chiabot-harvester.log 2>&1 &
+./harvester.sh > farmr-harvester.log 2>&1 &
 
 cd /chia-blockchain
 
