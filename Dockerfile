@@ -25,7 +25,7 @@ RUN git clone https://github.com/Chia-Network/chia-blockchain.git -b latest \
 RUN echo "Installing chiabot"
 RUN mkdir -p chiabot \
 && cd chiabot/ \
-&& wget https://github.com/joaquimguimaraes/chiabot/releases/download/v1.3.0-3/chiabot-linux-amd64.tar.gz \
+&& wget https://github.com/joaquimguimaraes/farmr/releases/download/v1.4.0.4/farmr-1.4.0.4-linux-x86_64.tar.gz \
 && tar -xf chiabot-linux-amd64.tar.gz \
 && rm -rf config.json \
 && rm -rf chiabot-linux-amd64.tar.gz
