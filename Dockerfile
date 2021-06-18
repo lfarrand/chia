@@ -17,7 +17,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update && apt-get install -y curl jq 
 
 RUN echo "Cloning chia-blockchain"
 RUN git clone https://github.com/Chia-Network/chia-blockchain.git -b latest \
-&& cd chia-blockchain
+&& cd chia-blockchain \
 && git submodule update --init mozilla-ca \
 && chmod +x install.sh \
 && /usr/bin/sh ./install.sh
