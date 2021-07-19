@@ -1,7 +1,7 @@
 cd /farmr
 truncate -s 0 farmr-harvester.log
 truncate -s 0 log.txt
-./harvester.sh > farmr-harvester.log 2>&1 &
+./farmr harvester headless > farmr-harvester.log 2>&1 &
 
 cd /chia-blockchain
 
