@@ -16,22 +16,20 @@ ENV full_node_port="null"
 RUN DEBIAN_FRONTEND=noninteractive apt-get update && apt-get install -y curl jq python3 ansible tar bash ca-certificates git openssl unzip wget python3-pip sudo acl build-essential python3-dev python3.8-venv python3.8-distutils apt nfs-common python-is-python3 vim nano rsync
 
 RUN echo "Cloning chia-blockchain"
-RUN git clone https://github.com/Chia-Network/chia-blockchain.git -b latest --recurse-submodules \
-&& cd chia-blockchain \
-&& chmod +x install.sh \
-&& /usr/bin/sh ./install.sh
+RUN git clone https://github.com/Chia-Network/chia-blockchain.git -b latest --recurse-submodules
+WORKDIR /chia-blockchain
+RUN chmod +x install.sh
+RUN /usr/bin/bash install.sh
 
 RUN echo "Installing farmr"
 RUN mkdir -p farmr
 WORKDIR /farmr
-ADD ./downloadfarmr.sh downloadfarmr.sh
-RUN chmod +x downloadfarmr.sh \
-&& ./downloadfarmr.sh
-
-RUN ls -al /farmr
+COPY downloadfarmr.sh .
+RUN chmod +x downloadfarmr.sh
+RUN /usr/bin/bash downloadfarmr.sh
 
 WORKDIR /chia-blockchain
 RUN mkdir /plots
-ADD ./entrypoint.sh entrypoint.sh
+COPY entrypoint.sh .
 
 ENTRYPOINT ["bash", "./entrypoint.sh"]
