@@ -6,8 +6,8 @@ if [[ -n "${TZ}" ]]; then
   ln -snf "/usr/share/zoneinfo/$TZ" /etc/localtime && echo "$TZ" > /etc/timezone
 fi
 
-echo "key_path: ${key_path}"
 echo "keys: ${keys}"
+echo "ca: ${ca}"
 echo "plots_dir: ${plots_dir}"
 echo "farmer: ${farmer}"
 echo "harvester: ${harvester}"

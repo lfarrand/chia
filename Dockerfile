@@ -18,20 +18,20 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update && DEBIAN_FRONTEND=noninteract
     ln -snf "/usr/share/zoneinfo/$TZ" /etc/localtime && echo "$TZ" > /etc/timezone && \
     dpkg-reconfigure -f noninteractive tzdata
 
+ARG BRANCH=latest
+
+RUN echo "Cloning chia-blockchain branch ${BRANCH}"
+RUN git clone --branch ${BRANCH} https://github.com/Chia-Network/chia-blockchain.git \
+&& cd chia-blockchain \
+&& git submodule update --init mozilla-ca \
+&& /usr/bin/sh ./install.sh
+
 RUN echo "Installing farmr"
 RUN mkdir -p farmr
 WORKDIR /farmr
 COPY downloadfarmr.sh .
 RUN chmod +x downloadfarmr.sh
 RUN /usr/bin/bash downloadfarmr.sh
-
-ARG BRANCH=latest
-
-RUN echo "Cloning ${BRANCH}" && \
-    git clone --branch ${BRANCH} https://github.com/Chia-Network/chia-blockchain.git && \
-    cd chia-blockchain && \
-    git submodule update --init mozilla-ca && \
-    /usr/bin/sh ./install.sh
 
 ENV PATH=/chia-blockchain/venv/bin:$PATH
 WORKDIR /chia-blockchain
