@@ -1,0 +1,32 @@
+version: "3.6"
+services:
+  chia:
+    container_name: chia
+    restart: unless-stopped
+    image: leefarrand/chia:latest
+    ports:
+      - '8444:8444'
+    environment:
+      # Farmer Only    
+#     - farmer=true
+      # Harvester Only
+     - harvester=true
+     - farmer_address=chia-full-node.lan
+     - farmer_port=8447
+     - ca=/keys
+     - keys=copy
+      # Harvester Only END
+      # If you would like to add keys manually via mnemonic file
+#     - keys=/path/in/container
+      # OR
+      # Disable key generation on start
+#     - keys=
+      - TZ=${TZ}
+    volumes:
+      - ./mainnet:/root/.chia/mainnet
+      - ./farmr/farmr-harvester.log:/farmr/farmr-harvester.log
+      - ./farmr/log.txt:/farmr/log.txt
+      - ./farmr/id.json:/farmr/id.json
+      - ./farmr/cache:/farmr/cache
+      - ./plots:/plots
+      - ./chia-full-node-keys:/keys

@@ -3,23 +3,20 @@ FROM ubuntu:latest
 EXPOSE 8555
 EXPOSE 8444
 
-ENV key_path="null"
+ENV CHIA_ROOT=/root/.chia/mainnet
 ENV keys="generate"
 ENV harvester="false"
 ENV farmer="false"
-ENV plot_dirs="/plots"
+ENV plots_dir="/plots"
 ENV farmer_address="null"
 ENV farmer_port="null"
 ENV testnet="false"
-ENV full_node_port="null"
+ENV TZ="Europe/London"
 
-RUN DEBIAN_FRONTEND=noninteractive apt-get update && apt-get install -y curl jq python3 ansible tar bash ca-certificates git openssl unzip wget python3-pip sudo acl build-essential python3-dev python3.8-venv python3.8-distutils apt nfs-common python-is-python3 vim nano rsync
-
-RUN echo "Cloning chia-blockchain"
-RUN git clone https://github.com/Chia-Network/chia-blockchain.git -b latest --recurse-submodules
-WORKDIR /chia-blockchain
-RUN chmod +x install.sh
-RUN /usr/bin/bash install.sh
+RUN DEBIAN_FRONTEND=noninteractive apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends -y bc curl lsb-release python3 tar bash ca-certificates git openssl unzip wget python3-pip sudo acl build-essential python3-dev python3.8-venv python3.8-distutils python-is-python3 vim tzdata && \
+    rm -rf /var/lib/apt/lists/* && \
+    ln -snf "/usr/share/zoneinfo/$TZ" /etc/localtime && echo "$TZ" > /etc/timezone && \
+    dpkg-reconfigure -f noninteractive tzdata
 
 RUN echo "Installing farmr"
 RUN mkdir -p farmr
@@ -28,8 +25,19 @@ COPY downloadfarmr.sh .
 RUN chmod +x downloadfarmr.sh
 RUN /usr/bin/bash downloadfarmr.sh
 
-WORKDIR /chia-blockchain
-RUN mkdir /plots
-COPY entrypoint.sh .
+ARG BRANCH=latest
 
-ENTRYPOINT ["bash", "./entrypoint.sh"]
+RUN echo "Cloning ${BRANCH}" && \
+    git clone --branch ${BRANCH} https://github.com/Chia-Network/chia-blockchain.git && \
+    cd chia-blockchain && \
+    git submodule update --init mozilla-ca && \
+    /usr/bin/sh ./install.sh
+
+ENV PATH=/chia-blockchain/venv/bin:$PATH
+WORKDIR /chia-blockchain
+
+COPY docker-start.sh /usr/local/bin/
+COPY docker-entrypoint.sh /usr/local/bin/
+
+ENTRYPOINT ["docker-entrypoint.sh"]
+CMD ["docker-start.sh"]
