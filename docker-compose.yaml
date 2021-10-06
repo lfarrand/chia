@@ -7,20 +7,13 @@ services:
     ports:
       - '8444:8444'
     environment:
-      # Farmer Only    
-#     - farmer=true
-      # Harvester Only
-     - harvester=true
-     - farmer_address=chia-full-node.lan
-     - farmer_port=8447
-     - ca=/keys
-     - keys=copy
-      # Harvester Only END
-      # If you would like to add keys manually via mnemonic file
-#     - keys=/path/in/container
-      # OR
-      # Disable key generation on start
-#     - keys=
+      - harvester=true
+      - farmer_address=chia-full-node.lan
+      - farmer_port=8447
+      - ca=/keys
+      - keys=copy
+      - plots_dir=/plots
+      - log_level=INFO
       - TZ=${TZ}
     volumes:
       - ./mainnet:/root/.chia/mainnet

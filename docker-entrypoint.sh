@@ -8,16 +8,20 @@ fi
 
 echo "key_path: ${key_path}"
 echo "keys: ${keys}"
-echo "plot_dirs: ${plot_dirs}"
+echo "plots_dir: ${plots_dir}"
 echo "farmer: ${farmer}"
 echo "harvester: ${harvester}"
 echo "farmer_address: ${farmer_address}"
 echo "farmer_port: ${farmer_port}"
 echo "testnet: ${testnet}"
+echo "log_level: ${log_level}"
 
 echo "/chia-blockchain/venv/bin/chia" > /farmr/override-xch-binary.txt
 
-cd /chia-blockchain || exit 1
+ls -l /
+
+cd /chia-blockchain
+ls -l
 
 # shellcheck disable=SC1091
 . ./activate
