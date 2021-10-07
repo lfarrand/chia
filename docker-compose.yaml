@@ -7,19 +7,19 @@ services:
     ports:
       - '8444:8444'
     environment:
-      - harvester=true
-      - farmer_address=chia-full-node.lan
-      - farmer_port=8447
-      - ca=/keys
-      - keys=copy
-      - plots_dir=/plots
-      - log_level=INFO
-      - TZ=${TZ}
+      - 'harvester=true'
+      - 'farmer_address=chia-full-node.lan'
+      - 'farmer_port=8447'
+      - 'ca=/keys'
+      - 'keys=copy'
+      - 'plots_dir=/plots'
+      - 'log_level=INFO'
+      - 'TZ=Europe/London'
     volumes:
-      - ./mainnet:/root/.chia/mainnet
-      - ./farmr/farmr-harvester.log:/farmr/farmr-harvester.log
-      - ./farmr/log.txt:/farmr/log.txt
-      - ./farmr/id.json:/farmr/id.json
-      - ./farmr/cache:/farmr/cache
-      - ./plots:/plots
-      - ./chia-full-node-keys:/keys
+      - './mainnet:/root/.chia/mainnet'
+      - './farmr/farmr-harvester.log:/farmr/farmr-harvester.log'
+      - './farmr/log.txt:/farmr/log.txt'
+      - './farmr/id.json:/farmr/id.json'
+      - './farmr/cache:/farmr/cache'
+      - './plots:/plots'
+      - './chia-full-node-keys:/keys'

@@ -18,10 +18,7 @@ echo "log_level: ${log_level}"
 
 echo "/chia-blockchain/venv/bin/chia" > /farmr/override-xch-binary.txt
 
-ls -l /
-
 cd /chia-blockchain
-ls -l
 
 # shellcheck disable=SC1091
 . ./activate
@@ -36,16 +33,18 @@ fi
 if [[ ${keys} == "persistent" ]]; then
   echo "Not touching key directories"
 elif [[ ${keys} == "generate" ]]; then
-  echo "to use your own keys pass them as a text file -v /path/to/keyfile:/path/in/container and -e keys=\"/path/in/container\""
+  echo "To use your own keys pass them as a text file -v /path/to/keyfile:/path/in/container and -e keys=\"/path/in/container\""
   chia keys generate
 elif [[ ${keys} == "copy" ]]; then
   if [[ -z ${ca} ]]; then
     echo "A path to a copy of the farmer peer's ssl/ca required."
   exit
   else
-  chia init -c "${ca}"
+    echo "Found existing farmer ssl keys in "${ca}", using them to initialize"
+    chia init -c "${ca}"
   fi
 else
+  echo "Adding keys from ${keys}"
   chia keys add -f "${keys}"
 fi
 
