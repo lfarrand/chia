@@ -36,8 +36,6 @@ RUN /usr/bin/bash downloadfarmr.sh
 ENV PATH=/chia-blockchain/venv/bin:$PATH
 WORKDIR /chia-blockchain
 
-COPY docker-start.sh /usr/local/bin/
-COPY docker-entrypoint.sh /usr/local/bin/
+COPY entrypoint.sh /usr/local/bin/
 
-ENTRYPOINT ["docker-entrypoint.sh"]
-CMD ["docker-start.sh"]
+ENTRYPOINT ["entrypoint.sh"]
