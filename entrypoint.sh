@@ -62,9 +62,6 @@ fi
 
 sed -i 's/localhost/127.0.0.1/g' "$CHIA_ROOT/config/config.yaml"
 
-truncate -s 0 /farmrfarmr-harvester.log
-truncate -s 0 /farmrlog.txt
-
 if [[ ${farmer} == 'true' ]]; then
   chia start farmer-only
 elif [[ ${harvester} == 'true' ]]; then
@@ -79,6 +76,9 @@ else
   chia start farmer
 fi
 
+cd /farmr
+truncate -s 0 farmr-harvester.log
+truncate -s 0 log.txt
 ./farmr harvester headless > farmr-harvester.log 2>&1 &
 
 trap "chia stop all -d; exit 0" SIGINT SIGTERM
